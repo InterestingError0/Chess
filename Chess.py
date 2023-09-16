@@ -24,7 +24,7 @@ pieces.extend([Piece("black", 7, 0, "rook"),
                Piece("black", 2, 0, "bishop"), 
                Piece("black", 1, 0, "knight"), 
                Piece("black", 0, 0, "rook"),
-               
+
                Piece("white", 7, 7, "rook"), 
                Piece("white", 6, 7, "knight"), 
                Piece("white", 5, 7, "bishop"), 
@@ -73,11 +73,6 @@ def main():
 
                     piece_clicked.x = x
                     piece_clicked.y = y
-
-                    for piece in pieces:
-                        print(piece.type)
-                        print(piece.x)
-                        print(piece.y)
 
                     piece_clicked_coords = [-1, -1]
                     piece_clicked = pieces[0]
