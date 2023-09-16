@@ -74,6 +74,10 @@ def main():
                     piece_clicked.x = x
                     piece_clicked.y = y
 
+                    for piece in pieces:
+                        if piece.colour != piece_clicked.colour and piece.x == piece_clicked.x and piece.y == piece_clicked.y:
+                            pieces.remove(piece)
+
                     piece_clicked_coords = [-1, -1]
                     piece_clicked = pieces[0]
                             
