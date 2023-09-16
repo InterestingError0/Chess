@@ -80,11 +80,12 @@ def main():
                             illegal_move = True
                     
                     for piece in pieces:
-                        if piece.colour != piece_clicked.colour and piece.x == x and piece.y == y:
-                            pieces.remove(piece)
-                        elif piece.colour == piece_clicked.colour and piece.x == x and piece.y == y:
-                            illegal_move = True
-                            break
+                        if piece.x == x and piece.y == y:
+                            if piece.colour != piece_clicked.colour:
+                                pieces.remove(piece)
+                            elif piece.colour == piece_clicked.colour:
+                                illegal_move = True
+                                break
                     
                     if illegal_move == True:
                         piece_clicked_coords = [-1, -1]
