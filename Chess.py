@@ -70,6 +70,10 @@ def main():
 
                     x = (new_mouse_pos[0] - 20) // 75
                     y = (new_mouse_pos[1] - 20) // 75
+
+                    if (x > 7 or y > 7) or (x < 0 or y < 0):
+                        piece_clicked_coords = [-1, -1]
+                        break
                     
                     for piece in pieces:
                         if piece.colour != piece_clicked.colour and piece.x == x and piece.y == y:
@@ -106,7 +110,6 @@ def main():
 
         #Update screen
         pygame.display.flip()
-
 
 if __name__== "__main__":
     main()
