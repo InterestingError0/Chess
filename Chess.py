@@ -109,7 +109,7 @@ def main():
                                     piece_clicked_coords = [-1, -1]
                                     break
                             else:
-                                if not (piece_clicked.y - 1 == y):
+                                if not piece_clicked.y - 1 == y:
                                     piece_clicked_coords = [-1, -1]
                                     break
                         elif piece_clicked.colour == "black":
@@ -118,7 +118,7 @@ def main():
                                     piece_clicked_coords = [-1, -1]
                                     break
                             else:
-                                if not (piece_clicked.y + 1 == y):
+                                if not piece_clicked.y + 1 == y:
                                     piece_clicked_coords = [-1, -1]
                                     break
                         
