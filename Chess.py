@@ -77,22 +77,32 @@ def main():
 
                     if piece_clicked.type == "rook":
                         if not (piece_clicked.x == x or piece_clicked.y == y):
-                            illegal_move = True
+                            piece_clicked_coords = [-1, -1]
+                            break
                     if piece_clicked.type == "bishop":
                         for i in range(1, 8):
                             if (piece_clicked.x + i == x or piece_clicked.x - i == x) and (piece_clicked.y + i == y or piece_clicked.y - i == y):
                                 break
                         else:
-                            illegal_move = True
+                            piece_clicked_coords = [-1, -1]
+                            break
                     if piece_clicked.type == "knight":
                         if not (((piece_clicked.x + 2 == x or piece_clicked.x - 2 == x) and (piece_clicked.y + 1 == y or piece_clicked.y - 1 == y)) or ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x) and (piece_clicked.y + 2 == y or piece_clicked.y - 2 == y))):
-                            illegal_move = True
+                            piece_clicked_coords = [-1, -1]
+                            break
                     if piece_clicked.type == "king":
                         if not ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x or piece_clicked.x == x) and (piece_clicked.y + 1 == y or piece_clicked.y - 1 == y or piece_clicked.y == y)):
-                            illegal_move = True
-                    
-                        
-                    
+                          piece_clicked_coords = [-1, -1]
+                          break
+                    if piece_clicked.type == "queen":
+                        if not (piece_clicked.x == x or piece_clicked.y == y):
+                            for i in range(1, 8):
+                                if (piece_clicked.x + i == x or piece_clicked.x - i == x) and (piece_clicked.y + i == y or piece_clicked.y - i == y):
+                                    break
+                            else:
+                                piece_clicked_coords = [-1, -1]
+                                break
+
                     for piece in pieces:
                         if piece.x == x and piece.y == y:
                             if piece.colour != piece_clicked.colour:
