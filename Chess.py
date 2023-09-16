@@ -11,30 +11,29 @@ class Piece:
         img = pygame.image.load(f"images/{self.colour}_{self.type}.png")
         surface.blit(img, (self.x * 75, self.y * 75))
 
-pieces = []
-for i in range(8):
-    pieces.append(Piece("black", i, 1, "pawn"))
-    pieces.append(Piece("white", i, 6, "pawn"))
-
-pieces.extend([Piece("black", 7, 0, "rook"), 
-               Piece("black", 6, 0, "knight"), 
-               Piece("black", 5, 0, "bishop"), 
-               Piece("black", 4, 0, "king"), 
-               Piece("black", 3, 0, "queen"), 
-               Piece("black", 2, 0, "bishop"), 
-               Piece("black", 1, 0, "knight"), 
-               Piece("black", 0, 0, "rook"),
-
-               Piece("white", 7, 7, "rook"), 
-               Piece("white", 6, 7, "knight"), 
-               Piece("white", 5, 7, "bishop"), 
-               Piece("white", 4, 7, "king"), 
-               Piece("white", 3, 7, "queen"), 
-               Piece("white", 2, 7, "bishop"), 
-               Piece("white", 1, 7, "knight"), 
-               Piece("white", 0, 7, "rook")])
-
 def main():
+    pieces = []
+    for i in range(8):
+        pieces.append(Piece("black", i, 1, "pawn"))
+        pieces.append(Piece("white", i, 6, "pawn"))
+
+    pieces.extend([Piece("black", 7, 0, "rook"), 
+                   Piece("black", 6, 0, "knight"), 
+                   Piece("black", 5, 0, "bishop"), 
+                   Piece("black", 4, 0, "king"), 
+                   Piece("black", 3, 0, "queen"), 
+                   Piece("black", 2, 0, "bishop"), 
+                   Piece("black", 1, 0, "knight"), 
+                   Piece("black", 0, 0, "rook"),
+                   
+                   Piece("white", 7, 7, "rook"), 
+                   Piece("white", 6, 7, "knight"), 
+                   Piece("white", 5, 7, "bishop"), 
+                   Piece("white", 4, 7, "king"), 
+                   Piece("white", 3, 7, "queen"), 
+                   Piece("white", 2, 7, "bishop"), 
+                   Piece("white", 1, 7, "knight"), 
+                   Piece("white", 0, 7, "rook")])
     pygame.init()
 
     logo = pygame.image.load("images/logo.png")
