@@ -53,6 +53,7 @@ def main():
     piece_clicked = pieces[0]
 
     while running:
+        illegal_move = False
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if piece_clicked_coords == [-1, -1]:
@@ -70,17 +71,23 @@ def main():
 
                     x = (new_mouse_pos[0] - 20) // 75
                     y = (new_mouse_pos[1] - 20) // 75
+                    
+                    for piece in pieces:
+                        if piece.colour != piece_clicked.colour and piece.x == x and piece.y == y:
+                            pieces.remove(piece)
+                        elif piece.colour == piece_clicked.colour and piece.x == x and piece.y == y:
+                            print("here")
+                            piece_clicked_coords = [-1, -1]
+                            illegal_move = True
+                            break
+                    
+                    if illegal_move == True:
+                        break
 
                     piece_clicked.x = x
                     piece_clicked.y = y
 
-                    for piece in pieces:
-                        if piece.colour != piece_clicked.colour and piece.x == piece_clicked.x and piece.y == piece_clicked.y:
-                            pieces.remove(piece)
-
                     piece_clicked_coords = [-1, -1]
-                    piece_clicked = pieces[0]
-                            
 
             if event.type == pygame.QUIT:
                 running = False
