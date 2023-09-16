@@ -39,7 +39,7 @@ def main():
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
-    pygame.display.set_caption("Chess")
+    pygame.display.set_caption("Chatting With Chess")
 
     #Initalize screen with dimensions (640,640)
     screen = pygame.display.set_mode((640, 640))
