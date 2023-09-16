@@ -88,8 +88,7 @@ def main():
                             illegal_move = True
                     if piece_clicked.type == "king":
                         if not ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x or piece_clicked.x == x) and (piece_clicked.y + 1 == y or piece_clicked.y - 1 == y or piece_clicked.y == y)):
-                          piece_clicked_coords = [-1, -1]
-                          break
+                            illegal_move = True
                     if piece_clicked.type == "queen":
                         if not (piece_clicked.x == x or piece_clicked.y == y):
                             for i in range(1, 8):
