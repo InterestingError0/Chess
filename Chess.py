@@ -84,6 +84,11 @@ def main():
                                 break
                         else:
                             illegal_move = True
+                    if piece_clicked.type == "knight":
+                        if not (((piece_clicked.x + 2 == x or piece_clicked.x - 2 == x) and (piece_clicked.y + 1 == y or piece_clicked.y - 1 == y)) or ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x) and (piece_clicked.y + 2 == y or piece_clicked.y - 2 == y))):
+                            illegal_move = True
+                    
+                        
                     
                     for piece in pieces:
                         if piece.x == x and piece.y == y:
