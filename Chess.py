@@ -3,7 +3,7 @@ import pygame
 def main():
     pygame.init()
 
-    logo = pygame.image.load("logo.png")
+    logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
     pygame.display.set_caption("Chess")
 
