@@ -112,6 +112,9 @@ def main():
                                 if not piece_clicked.y - 1 == y:
                                     piece_clicked_coords = [-1, -1]
                                     break
+                                for piece in pieces:
+                                    if piece_clicked.y - 1 == piece.y:
+                                        illegal_move = True
                         elif piece_clicked.colour == "black":
                             if piece_clicked.y == 1:
                                 if not (piece_clicked.y + 2 == y and piece_clicked.x == x or piece_clicked.y + 1 == y):
@@ -121,8 +124,12 @@ def main():
                                 if not piece_clicked.y + 1 == y:
                                     piece_clicked_coords = [-1, -1]
                                     break
-                        
-
+                                for piece in pieces:
+                                    if piece_clicked.y + 1 == piece.y:
+                                        illegal_move = True
+                    if illegal_move == True:
+                        piece_clicked_coords = [-1, -1]
+                        break
                     for piece in pieces:
                         if piece.x == x and piece.y == y:
                             if piece.colour != piece_clicked.colour:
