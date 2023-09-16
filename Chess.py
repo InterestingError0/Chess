@@ -114,11 +114,11 @@ def main():
                                     illegal_move = True
                                 for piece in pieces:
                                     #Prevent pawn from capturing a piece in front of it
-                                    if piece_clicked.y - 1 == piece.y and piece_clicked.x == piece.x:
+                                    if piece_clicked.y + 1 == piece.y and piece_clicked.x == piece.x:
                                         illegal_move = True
                                 #Allow pawn to capture pieces that are one square away and diagonal to it
                                 for piece in pieces:
-                                    if piece_clicked.y - 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
+                                    if piece_clicked.y + 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
                                         break
                             
                         elif piece_clicked.colour == "black":
@@ -127,7 +127,7 @@ def main():
                                 if not (piece_clicked.y + 2 == y and piece_clicked.x == x or piece_clicked.y + 1 == y):
                                     for piece in pieces:
                                         #Allow pawn to capture pieces that are one sware away and diagonal to it on it's first move
-                                        if piece_clicked.y - 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
+                                        if piece_clicked.y + 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
                                             break
                                     else: illegal_move = True
                             else:
@@ -136,7 +136,7 @@ def main():
                                     illegal_move = True
                                 for piece in pieces:
                                     #Prevent pawn from capturing a piece in front of it
-                                    if piece_clicked.y - 1 == piece.y and piece_clicked.x == piece.x:
+                                    if piece_clicked.y + 1 == piece.y and piece_clicked.x == piece.x:
                                         illegal_move = True
                                 #Allow pawn to capture pieces that are one square away and diagonal to it
                                 for piece in pieces:
