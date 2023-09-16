@@ -78,6 +78,12 @@ def main():
                     if piece_clicked.type == "rook":
                         if not (piece_clicked.x == x or piece_clicked.y == y):
                             illegal_move = True
+                    if piece_clicked.type == "bishop":
+                        for i in range(1, 8):
+                            if (piece_clicked.x + i == x or piece_clicked.x - i == x) and (piece_clicked.y + i == y or piece_clicked.y - i == y):
+                                break
+                        else:
+                            illegal_move = True
                     
                     for piece in pieces:
                         if piece.x == x and piece.y == y:
