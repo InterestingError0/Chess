@@ -102,6 +102,26 @@ def main():
                             else:
                                 piece_clicked_coords = [-1, -1]
                                 break
+                    if piece_clicked.type == "pawn":
+                        if piece_clicked.colour == "white":
+                            if piece_clicked.y == 6:
+                                if not (piece_clicked.y - 2 == y and piece_clicked.x == x or piece_clicked.y - 1 == y):
+                                    piece_clicked_coords = [-1, -1]
+                                    break
+                            else:
+                                if not (piece_clicked.y - 1 == y):
+                                    piece_clicked_coords = [-1, -1]
+                                    break
+                        elif piece_clicked.colour == "black":
+                            if piece_clicked.y == 1:
+                                if not (piece_clicked.y + 2 == y and piece_clicked.x == x or piece_clicked.y + 1 == y):
+                                    piece_clicked_coords = [-1, -1]
+                                    break
+                            else:
+                                if not (piece_clicked.y + 1 == y):
+                                    piece_clicked_coords = [-1, -1]
+                                    break
+                        
 
                     for piece in pieces:
                         if piece.x == x and piece.y == y:
