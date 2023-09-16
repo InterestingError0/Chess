@@ -75,7 +75,6 @@ def main():
                         if piece.colour != piece_clicked.colour and piece.x == x and piece.y == y:
                             pieces.remove(piece)
                         elif piece.colour == piece_clicked.colour and piece.x == x and piece.y == y:
-                            print("here")
                             piece_clicked_coords = [-1, -1]
                             illegal_move = True
                             break
