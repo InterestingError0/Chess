@@ -39,37 +39,70 @@ def main():
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
-    pygame.display.set_caption("Chatting With Chess")
+    pygame.display.set_caption("Chess")
 
     #Initalize screen with dimensions (640,640)
     screen = pygame.display.set_mode((640, 640))
 
     #Create surface with dimensions (640,640)
     board = pygame.Surface((600, 600))
-    #Fill board with colour
-    board.fill((150, 111, 51))
-
-    #Make every other rectangle light
-    for x in range(0, 8, 2):
-        for y in range(0, 8, 2):
-            pygame.draw.rect(board, (210, 180, 140), (x * 75, y * 75, 75, 75))
-            pygame.draw.rect(board, (210, 180, 140), ((x+1) * 75, (y+1) * 75, 75, 75))
-
-    for piece in pieces:
-        piece.draw(board)
-
-    #Draws board onto screen, positioned at (20,20)
-    screen.blit(board, (20, 20))
-
-    #Update screen
-    pygame.display.flip()
-
+    
     running = True
+    
+    piece_clicked_coords = [-1, -1]
+    piece_clicked = pieces[0]
 
     while running:
         for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if piece_clicked_coords == [-1, -1]:
+                    mouse_pos = pygame.mouse.get_pos()
+
+                    x = (mouse_pos[0] - 20) // 75
+                    y = (mouse_pos[1] - 20) // 75
+
+                    for piece in pieces:
+                        if piece.x == x and piece.y == y:
+                            piece_clicked_coords = [x, y]
+                            piece_clicked = piece
+                else:
+                    new_mouse_pos = pygame.mouse.get_pos()
+
+                    x = (new_mouse_pos[0] - 20) // 75
+                    y = (new_mouse_pos[1] - 20) // 75
+
+                    piece_clicked.x = x
+                    piece_clicked.y = y
+
+                    for piece in pieces:
+                        print(piece.type)
+                        print(piece.x)
+                        print(piece.y)
+
+                    piece_clicked_coords = [-1, -1]
+                    piece_clicked = pieces[0]
+                            
+
             if event.type == pygame.QUIT:
                 running = False
+                
+        #Fill board with colour
+        board.fill((150, 111, 51))
+        #Make every other rectangle light
+        for x in range(0, 8, 2):
+            for y in range(0, 8, 2):
+                pygame.draw.rect(board, (210, 180, 140), (x * 75, y * 75, 75, 75))
+                pygame.draw.rect(board, (210, 180, 140), ((x+1) * 75, (y+1) * 75, 75, 75))
+
+        for piece in pieces:
+            piece.draw(board)
+
+        #Draws board onto screen, positioned at (20,20)
+        screen.blit(board, (20, 20))
+
+        #Update screen
+        pygame.display.flip()
+
 
 if __name__== "__main__":
     main()
