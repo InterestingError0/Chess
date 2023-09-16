@@ -74,16 +74,20 @@ def main():
                     if (x > 7 or y > 7) or (x < 0 or y < 0):
                         piece_clicked_coords = [-1, -1]
                         break
+
+                    if piece_clicked.type == "rook":
+                        if not (piece_clicked.x == x or piece_clicked.y == y):
+                            illegal_move = True
                     
                     for piece in pieces:
                         if piece.colour != piece_clicked.colour and piece.x == x and piece.y == y:
                             pieces.remove(piece)
                         elif piece.colour == piece_clicked.colour and piece.x == x and piece.y == y:
-                            piece_clicked_coords = [-1, -1]
                             illegal_move = True
                             break
                     
                     if illegal_move == True:
+                        piece_clicked_coords = [-1, -1]
                         break
 
                     piece_clicked.x = x
