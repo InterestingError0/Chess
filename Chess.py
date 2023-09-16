@@ -118,10 +118,11 @@ def main():
                                 for piece in pieces:
                                     if piece_clicked.y + 1 == piece.y:
                                         illegal_move = True
+                                        
                     if illegal_move == True:
                         piece_clicked_coords = [-1, -1]
                         break
-                    
+
                     for piece in pieces:
                         if piece.x == x and piece.y == y:
                             if piece.colour != piece_clicked.colour:
