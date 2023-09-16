@@ -72,24 +72,20 @@ def main():
                     y = (new_mouse_pos[1] - 20) // 75
 
                     if (x > 7 or y > 7) or (x < 0 or y < 0):
-                        piece_clicked_coords = [-1, -1]
-                        break
+                        illegal_move = True
 
                     if piece_clicked.type == "rook":
                         if not (piece_clicked.x == x or piece_clicked.y == y):
-                            piece_clicked_coords = [-1, -1]
-                            break
+                            illegal_move = True
                     if piece_clicked.type == "bishop":
                         for i in range(1, 8):
                             if (piece_clicked.x + i == x or piece_clicked.x - i == x) and (piece_clicked.y + i == y or piece_clicked.y - i == y):
                                 break
                         else:
-                            piece_clicked_coords = [-1, -1]
-                            break
+                            illegal_move = True
                     if piece_clicked.type == "knight":
                         if not (((piece_clicked.x + 2 == x or piece_clicked.x - 2 == x) and (piece_clicked.y + 1 == y or piece_clicked.y - 1 == y)) or ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x) and (piece_clicked.y + 2 == y or piece_clicked.y - 2 == y))):
-                            piece_clicked_coords = [-1, -1]
-                            break
+                            illegal_move = True
                     if piece_clicked.type == "king":
                         if not ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x or piece_clicked.x == x) and (piece_clicked.y + 1 == y or piece_clicked.y - 1 == y or piece_clicked.y == y)):
                           piece_clicked_coords = [-1, -1]
@@ -100,30 +96,25 @@ def main():
                                 if (piece_clicked.x + i == x or piece_clicked.x - i == x) and (piece_clicked.y + i == y or piece_clicked.y - i == y):
                                     break
                             else:
-                                piece_clicked_coords = [-1, -1]
-                                break
+                                illegal_move = True
                     if piece_clicked.type == "pawn":
                         if piece_clicked.colour == "white":
                             if piece_clicked.y == 6:
                                 if not (piece_clicked.y - 2 == y and piece_clicked.x == x or piece_clicked.y - 1 == y):
-                                    piece_clicked_coords = [-1, -1]
-                                    break
+                                    illegal_move = True
                             else:
                                 if not piece_clicked.y - 1 == y:
-                                    piece_clicked_coords = [-1, -1]
-                                    break
+                                    illegal_move = True
                                 for piece in pieces:
                                     if piece_clicked.y - 1 == piece.y:
                                         illegal_move = True
                         elif piece_clicked.colour == "black":
                             if piece_clicked.y == 1:
                                 if not (piece_clicked.y + 2 == y and piece_clicked.x == x or piece_clicked.y + 1 == y):
-                                    piece_clicked_coords = [-1, -1]
-                                    break
+                                    illegal_move = True
                             else:
                                 if not piece_clicked.y + 1 == y:
-                                    piece_clicked_coords = [-1, -1]
-                                    break
+                                    illegal_move = True
                                 for piece in pieces:
                                     if piece_clicked.y + 1 == piece.y:
                                         illegal_move = True
