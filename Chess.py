@@ -100,24 +100,38 @@ def main():
                     if piece_clicked.type == "pawn":
                         if piece_clicked.colour == "white":
                             if piece_clicked.y == 6:
-                                if not (piece_clicked.y - 2 == y and piece_clicked.x == x or piece_clicked.y - 1 == y):
-                                    illegal_move = True
+                                if not (piece_clicked.y - 2 == y and piece_clicked.x == x):
+                                    for piece in pieces:
+                                        if piece_clicked.y - 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
+                                            break
+                                    else:    
+                                        illegal_move = True
                             else:
                                 if not piece_clicked.y - 1 == y:
                                     illegal_move = True
                                 for piece in pieces:
-                                    if piece_clicked.y - 1 == piece.y:
+                                    if piece_clicked.y - 1 == piece.y and piece_clicked.x == piece.x:
                                         illegal_move = True
+                                for piece in pieces:
+                                    if piece_clicked.y - 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
+                                        break
+                            
                         elif piece_clicked.colour == "black":
                             if piece_clicked.y == 1:
                                 if not (piece_clicked.y + 2 == y and piece_clicked.x == x or piece_clicked.y + 1 == y):
-                                    illegal_move = True
+                                    for piece in pieces:
+                                        if piece_clicked.y - 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
+                                            break
+                                    else: illegal_move = True
                             else:
                                 if not piece_clicked.y + 1 == y:
                                     illegal_move = True
                                 for piece in pieces:
-                                    if piece_clicked.y + 1 == piece.y:
+                                    if piece_clicked.y - 1 == piece.y and piece_clicked.x == piece.x:
                                         illegal_move = True
+                                for piece in pieces:
+                                    if piece_clicked.y - 1 == y and (piece.x == piece_clicked.x + 1 or piece.x == piece_clicked.x - 1):
+                                        break
                                         
                     if illegal_move == True:
                         piece_clicked_coords = [-1, -1]
