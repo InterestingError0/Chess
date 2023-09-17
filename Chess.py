@@ -415,7 +415,7 @@ def main():
             )
             # Draws the text in the text box and clears the message so no duplicate messages are sent
             ptext.draw("\nYou: %s \n Chester: %s" % (message, (response["choices"][0]["message"]["content"])),
-                       (20, drawing), surf=outputback)
+                       (20, drawing), fontsize=20, surf=outputback)
 
             message = ""
 
