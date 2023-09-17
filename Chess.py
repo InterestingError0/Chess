@@ -12,7 +12,6 @@ import openai
 # OpenAI API Key (DON'T REMOVE!!!)
 openai.api_key = "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"
 
-
 # Class for chess pieces
 class Piece:
     def __init__(self, colour, x, y, piece_type):
