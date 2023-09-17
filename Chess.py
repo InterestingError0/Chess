@@ -69,7 +69,6 @@ def main():
                                 break
                             piece_clicked_coords = [x, y]
                             piece_clicked = piece
-                            whites_move = not whites_move
                 else:
                     new_mouse_pos = pygame.mouse.get_pos()
 
@@ -162,6 +161,8 @@ def main():
                     if illegal_move == True:
                         piece_clicked_coords = [-1, -1]
                         break
+
+                    whites_move = not whites_move
 
                     piece_clicked.x = x
                     piece_clicked.y = y
