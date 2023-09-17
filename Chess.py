@@ -1,4 +1,6 @@
 import pygame
+import pygame_textinput
+pygame.init()
 
 class Piece:
     def __init__(self, colour, x, y, piece_type):
@@ -34,14 +36,25 @@ def main():
                    Piece("white", 2, 7, "bishop"), 
                    Piece("white", 1, 7, "knight"), 
                    Piece("white", 0, 7, "rook")])
-    pygame.init()
+  
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
     pygame.display.set_caption("Chatting with Chess")
 
+    textinput = pygame_textinput.TextInputVisualizer()
+
+    textinput.font_color = (255, 255, 255)
+
+    textinput.antialias = True
+
+    textinput.cursor_color = (255, 255, 255)
+
+    textinput.cursor_width = 3
+
     #Initalize screen with dimensions (640,640)
-    screen = pygame.display.set_mode((640, 640))
+    screen = pygame.display.set_mode((840, 640))
+    
 
     #Create surface with dimensions (640,640)
     board = pygame.Surface((600, 600))
@@ -52,8 +65,10 @@ def main():
     piece_clicked = pieces[0]
 
     while running:
+        screen.fill((100, 100, 100))
+        events = pygame.event.get()
         illegal_move = False
-        for event in pygame.event.get():
+        for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if piece_clicked_coords == [-1, -1]:
                     mouse_pos = pygame.mouse.get_pos()
@@ -178,10 +193,18 @@ def main():
             piece.draw(board)
 
         #Draws board onto screen, positioned at (20,20)
+
+        
+        
+        textinput.update(events)
+        screen.blit(textinput.surface, (730, 80))
+
         screen.blit(board, (20, 20))
 
         #Update screen
-        pygame.display.flip()
+        
+        pygame.display.update()
+        
 
 if __name__== "__main__":
     main()
