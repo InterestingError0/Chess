@@ -1,12 +1,18 @@
+#Chatting with Chess - HTN 2023
+#A chess program made with an enteraining assistant named Chester
+#DH & RC
+#September 17th 2023, ~3:30 A.M
+
+#All necessary imports
 import pygame
 import pygame_textinput
 import ptext
 import openai 
 
-#OpenAI API Key (DON"T REMOVE!!!)
+#OpenAI API Key (DON'T REMOVE!!!)
 openai.api_key = "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"
 
-
+#Class for chess pieces
 class Piece:
     def __init__(self, colour, x, y, piece_type):
         self.colour = colour
@@ -19,8 +25,9 @@ class Piece:
         surface.blit(img, (self.x * 75, self.y * 75))
 
 def main():
-    message = ""
-    pieces = []
+    
+
+    #Organizes the chess pieces on the board
     for i in range(8):
         pieces.append(Piece("black", i, 1, "pawn"))
         pieces.append(Piece("white", i, 6, "pawn"))
@@ -43,8 +50,12 @@ def main():
                    Piece("white", 1, 7, "knight"), 
                    Piece("white", 0, 7, "rook")])
     
+    #All necessary variables needed
     pygame.init()
+
     keydown = True
+    message = ""
+    pieces = []
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
@@ -88,6 +99,7 @@ def main():
 
     drawing = 20
     
+    #Main loop 
     while running:
         
         screen.fill((100, 100, 100))
@@ -112,6 +124,7 @@ def main():
                     x = (new_mouse_pos[0] - 20) // 75
                     y = (new_mouse_pos[1] - 20) // 75
 
+                    #Determining legal moves for most of the chess pieces
                     if (x > 7 or y > 7) or (x < 0 or y < 0):
                         illegal_move = True
 
@@ -210,7 +223,7 @@ def main():
             
 
             
-                
+        #Used for textbox inputting      
         if event.type == pygame.KEYDOWN and keydown == True:
             if event.key == pygame.K_RETURN:
                 message = textinput.value
@@ -233,15 +246,16 @@ def main():
 
         
        
-
+        #ChatGPT query to get a response based on a question that someone asks
         if (message != ""):
             response = openai.ChatCompletion.create(
             model = "gpt-3.5-turbo",
             messages = [
-                {"role": "system", "content": "Stick to the topic of chess and provide commentary given chess-related information. Otherwise, ignore it. As well, keep commentary to 6 words or less and be spicy"},
+                {"role": "system", "content": "Stick to the topic of chess and provide commentary given chess-related information. Otherwise, ignore it. As well, keep commentary to 10 words or less and be spicy. Your name is Chester and don't let anyone tell you otherwise!"},
                 {"role": "user", "content": message}
             ]
         )
+            #Draws teh text in the text box and clears the message so no duplicate messages are sent
             ptext.draw("\nYou: %s \n Chester: %s" % (message, (response["choices"][0]["message"]["content"])), (20, drawing), surf=outputback)
             
             
@@ -249,7 +263,7 @@ def main():
             
 
               
-        
+        #Writes everything to screen and refreshes
         textinput.update(events)
 
 
