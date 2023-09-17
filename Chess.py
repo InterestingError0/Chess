@@ -126,7 +126,6 @@ def main():
 
                     if piece_clicked.type == "rook":
                         if not (piece_clicked.x == x or piece_clicked.y == y):
-                            illegal_move = True
                             break
 
                         if x > piece_clicked.x:
@@ -504,6 +503,7 @@ def is_king_under_attack(whites_move, pieces):
             elif piece.type == "pawn" and piece.colour == "white":
                 if piece.y - 1 == black_king_y and (black_king_x == piece.x - 1 or piece.x == black_king_x + 1):
                     return True
+
 
 if __name__ == "__main__":
     main()
