@@ -1,6 +1,5 @@
 import pygame
 
-
 class Piece:
     def __init__(self, colour, x, y, piece_type):
         self.colour = colour
@@ -148,7 +147,7 @@ def main():
                                         illegal_move = True
                                         break
                         elif x < piece_clicked.x and y > piece_clicked.y:
-                            for i in range(piece_clicked.x, x, -1):
+                            for i in range(1, 8):
                                 if illegal_move:
                                     break
 
@@ -157,7 +156,7 @@ def main():
                                         illegal_move = True
                                         break
                         elif x < piece_clicked.x and y < piece_clicked.y:
-                            for i in range(piece_clicked.x, x, -1):
+                            for i in range(1, 8):
                                 if illegal_move:
                                     break
 
@@ -243,7 +242,7 @@ def main():
                                             illegal_move = True
                                             break
                             elif x < piece_clicked.x and y > piece_clicked.y:
-                                for i in range(piece_clicked.x, x, -1):
+                                for i in range(1, 8):
                                     if illegal_move:
                                         break
 
@@ -252,7 +251,7 @@ def main():
                                             illegal_move = True
                                             break
                             elif x < piece_clicked.x and y < piece_clicked.y:
-                                for i in range(piece_clicked.x, x, -1):
+                                for i in range(1, 8):
                                     if illegal_move:
                                         break
 
@@ -427,7 +426,6 @@ def is_king_under_attack(whites_move, pieces):
             elif piece.type == "pawn" and piece.colour == "white":
                 if piece.y - 1 == black_king_y and (black_king_x == piece.x - 1 or piece.x == black_king_x + 1):
                     return True
-
 
 if __name__ == "__main__":
     main()
