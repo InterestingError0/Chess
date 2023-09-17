@@ -1,5 +1,18 @@
-import pygame
+# Chatting with Chess - HTN 2023
+# A chess program made with an entertaining assistant named Chester
+# DH & RC
+# September 17th 2023, ~3:30 A.M
 
+# All necessary imports
+import pygame
+import pygame_textinput
+import ptext
+import openai
+
+# OpenAI API Key (DON'T REMOVE!!!)
+openai.api_key = "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"
+
+# Class for chess pieces
 class Piece:
     def __init__(self, colour, x, y, piece_type):
         self.colour = colour
@@ -14,6 +27,7 @@ class Piece:
 
 def main():
     pieces = []
+    # Organizes the chess pieces on the board
     for i in range(8):
         pieces.append(Piece("black", i, 1, "pawn"))
         pieces.append(Piece("white", i, 6, "pawn"))
@@ -35,29 +49,58 @@ def main():
                    Piece("white", 2, 7, "bishop"),
                    Piece("white", 1, 7, "knight"),
                    Piece("white", 0, 7, "rook")])
+
+    # All necessary variables needed
     pygame.init()
+
+    message = ""
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
     pygame.display.set_caption("Chatting with Chess")
 
-    # Initialize screen with dimensions (640,640)
-    screen = pygame.display.set_mode((640, 640))
+    textinput = pygame_textinput.TextInputVisualizer()
+
+    textinput.font_color = (255, 255, 255)
+
+    textinput.cursor_color = (255, 255, 255)
+
+    textinput.cursor_width = 3
+
+    textinput.font_object = pygame.font.Font(None, 25)
+
+    # Initialize screen with dimensions (1240,640)
+    screen = pygame.display.set_mode((1240, 640))
 
     # Create surface with dimensions (640,640)
-    board = pygame.Surface((600, 600))
+    board = pygame.Surface((640, 640))
+
+    textback = pygame.Surface((600, 60))
+
+    outputback = pygame.Surface((580, 400))
+
+    textback.fill((150, 150, 150))
 
     running = True
 
     piece_clicked_coords = [-1, -1]
     piece_clicked = pieces[0]
 
+    keydown = True
+
+    drawing = 20
+
     whites_move = True
 
+    # Main loop
     while running:
-        # print(is_king_under_attack(whites_move, pieces))
+        screen.fill((100, 100, 100))
+
+        events = pygame.event.get()
+
         illegal_move = False
-        for event in pygame.event.get():
+
+        for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if piece_clicked_coords == [-1, -1]:
                     mouse_pos = pygame.mouse.get_pos()
@@ -169,7 +212,7 @@ def main():
                         if not (((piece_clicked.x + 2 == x or piece_clicked.x - 2 == x) and (
                                 piece_clicked.y + 1 == y or piece_clicked.y - 1 == y)) or (
                                         (piece_clicked.x + 1 == x or piece_clicked.x - 1 == x) and (
-                                        piece_clicked.y + 2 == y or piece_clicked.y - 2 == y))):
+                                         piece_clicked.y + 2 == y or piece_clicked.y - 2 == y))):
                             illegal_move = True
                     if piece_clicked.type == "king":
                         if not ((piece_clicked.x + 1 == x or piece_clicked.x - 1 == x or piece_clicked.x == x) and (
@@ -339,6 +382,16 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
+            # Used for textbox inputting
+            if event.type == pygame.KEYDOWN and keydown == True:
+                if event.key == pygame.K_RETURN:
+                    message = textinput.value
+                    textinput.value = ""
+                    drawing += 40
+                keydown = False
+            if event.type == pygame.KEYUP and keydown == False:
+                keydown = True
+
         # Fill board with colour
         board.fill((150, 111, 51))
         # Make every other rectangle light
@@ -350,12 +403,36 @@ def main():
         for piece in pieces:
             piece.draw(board)
 
+        # ChatGPT query to get a response based on a question that someone asks
+        if message != "":
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system",
+                     "content": "Stick to the topic of chess and provide commentary given chess-related information. Otherwise, ignore it. As well, keep commentary to 10 words or less and be spicy. Your name is Chester and don't let anyone tell you otherwise!"},
+                    {"role": "user", "content": message}
+                ]
+            )
+            # Draws the text in the text box and clears the message so no duplicate messages are sent
+            ptext.draw("\nYou: %s \n Chester: %s" % (message, (response["choices"][0]["message"]["content"])),
+                       (20, drawing), surf=outputback)
+
+            message = ""
+
+        # Writes everything to screen and refreshes
+        textinput.update(events)
+
+        screen.blit(outputback, (650, 50))
+
+        screen.blit(textback, (630, 550))
+
+        screen.blit(textinput.surface, (630, 550))
+
         # Draws board onto screen, positioned at (20,20)
         screen.blit(board, (20, 20))
 
         # Update screen
         pygame.display.flip()
-
 
 def is_king_under_attack(whites_move, pieces):
     if whites_move:
