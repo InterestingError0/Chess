@@ -82,6 +82,43 @@ def main():
                     if piece_clicked.type == "rook":
                         if not (piece_clicked.x == x or piece_clicked.y == y):
                             illegal_move = True
+                                                        
+                        if x > piece_clicked.x:
+                            for i in range(piece_clicked.x + 1, x):
+                                if illegal_move == True:
+                                    break
+
+                                for piece in pieces:
+                                    if piece.x == i and piece.y == y:
+                                        illegal_move = True
+                                        break
+                        elif x < piece_clicked.x:
+                            for i in range(piece_clicked.x - 1, x):
+                                if illegal_move == True:
+                                    break
+
+                                for piece in pieces:
+                                    if piece.x == i and piece.y == y:
+                                        illegal_move = True
+                                        break
+                        elif y > piece_clicked.y:
+                            for i in range(piece_clicked.y + 1, y):
+                                if illegal_move == True:
+                                    break
+
+                                for piece in pieces:
+                                    if piece.y == i and piece.x == x:
+                                        illegal_move = True
+                                        break
+                        elif y < piece_clicked.y:
+                            for i in range(piece_clicked.y - 1, y):
+                                if illegal_move == True:
+                                    break
+
+                                for piece in pieces:
+                                    if piece.y == i and piece.x == x:
+                                        illegal_move = True
+                                        break
                     if piece_clicked.type == "bishop":
                         for i in range(1, 8):
                             if (piece_clicked.x + i == x or piece_clicked.x - i == x) and (piece_clicked.y + i == y or piece_clicked.y - i == y):
