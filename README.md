@@ -1,5 +1,8 @@
 # Chatting With Chess
 
+![Chatting With Chess](https://github.com/InterestingError0/Chess/assets/79717436/ab6e24b5-d5f3-4edf-8ba9-c98c7fe9325b)
+
+
 For Hack The North 2023, we created a program called _Chatting With Chess_.  This program is where a companion, named Chester, can give you some reasonable advice about chess, but some other comments that may or may not be useful. You can also play the incomplete version of the game on here.
 
 This project had much hard work and dedication put into it, and we learned quite a bit about many different technologies, such as:
