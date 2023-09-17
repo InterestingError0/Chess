@@ -432,9 +432,77 @@ def main():
         screen.blit(board, (20, 20))
 
         # Update screen
-
         pygame.display.flip()
 
+def is_king_under_attack(whites_move, pieces):
+    if whites_move:
+        whites_king_x = -1
+        whites_king_y = -1
+        for x in pieces:
+            if x.type == "king" and x.colour == "white":
+                whites_king_x = x.x
+                whites_king_y = x.y
+                break
+        for piece in pieces:
+            if piece.type == "rook" and piece.colour == "black":
+                if piece.x == whites_king_x:
+                    return True
+                elif piece.y == whites_king_y:
+                    return True
+            elif piece.type == "bishop" and piece.colour == "black":
+                for i in range(8):
+                    if (piece.x + i == whites_king_x or piece.x - i == whites_king_x) and (
+                            piece.y + i == whites_king_y or piece.y - i == whites_king_y):
+                        return True
+            elif piece.type == "knight" and piece.colour == "black":
+                if ((piece.x + 2 == whites_king_x or piece.x - 2 == whites_king_x) and (
+                        piece.y + 1 == whites_king_y or piece.y - 1 == whites_king_y)) or (
+                        (piece.x + 1 == whites_king_x or piece.x - 1 == whites_king_x) and (
+                        piece.y + 2 == whites_king_y or piece.y - 2 == whites_king_y)):
+                    return True
+            elif piece.type == "queen" and piece.colour == "black":
+                if not (piece.x == whites_king_x or piece.y == whites_king_y):
+                    for i in range(1, 8):
+                        if (piece.x + i == whites_king_x or piece.x - i == whites_king_x) and (
+                                piece.y + i == whites_king_y or piece.y - i == whites_king_y):
+                            return True
+            elif piece.type == "pawn" and piece.colour == "black":
+                if piece.y + 1 == whites_king_y and (whites_king_x == piece.x + 1 or piece.x == whites_king_x - 1):
+                    return True
+    elif not whites_move:
+        black_king_x = -1
+        black_king_y = -1
+        for x in pieces:
+            if x.type == "king" and x.colour == "black":
+                black_king_x = x.x
+                black_king_y = x.y
+                break
+        for piece in pieces:
+            if piece.type == "rook" and piece.colour == "white":
+                if piece.x == black_king_x:
+                    return True
+                elif piece.y == black_king_y:
+                    return True
+            elif piece.type == "bishop" and piece.colour == "white":
+                for i in range(8):
+                    if (piece.x + i == black_king_x or piece.x - i == black_king_x) and (
+                            piece.y + i == black_king_y or piece.y - i == black_king_y):
+                        return True
+            elif piece.type == "knight" and piece.colour == "white":
+                if ((piece.x + 2 == black_king_x or piece.x - 2 == black_king_x) and (
+                        piece.y + 1 == black_king_y or piece.y - 1 == black_king_y)) or (
+                        (piece.x + 1 == black_king_x or piece.x - 1 == black_king_x) and (
+                        piece.y + 2 == black_king_y or piece.y - 2 == black_king_y)):
+                    return True
+            elif piece.type == "queen" and piece.colour == "white":
+                if not (piece.x == black_king_x or piece.y == black_king_y):
+                    for i in range(1, 8):
+                        if (piece.x + i == black_king_x or piece.x - i == black_king_x) and (
+                                piece.y + i == black_king_y or piece.y - i == black_king_y):
+                            return True
+            elif piece.type == "pawn" and piece.colour == "white":
+                if piece.y - 1 == black_king_y and (black_king_x == piece.x - 1 or piece.x == black_king_x + 1):
+                    return True
 
 if __name__ == "__main__":
     main()
