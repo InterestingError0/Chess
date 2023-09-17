@@ -1,8 +1,11 @@
 import pygame
 import pygame_textinput
 import ptext
-pygame.init()
-keydown = True
+import openai 
+
+#OpenAI API Key (DON"T REMOVE!!!)
+openai.api_key = "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"
+
 
 class Piece:
     def __init__(self, colour, x, y, piece_type):
@@ -39,7 +42,9 @@ def main():
                    Piece("white", 2, 7, "bishop"), 
                    Piece("white", 1, 7, "knight"), 
                    Piece("white", 0, 7, "rook")])
-  
+    
+    pygame.init()
+    keydown = True
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
@@ -58,15 +63,15 @@ def main():
     textinput.font_object = pygame.font.Font(None, 25)
 
     #Initalize screen with dimensions (640,640)
-    screen = pygame.display.set_mode((940, 640))
+    screen = pygame.display.set_mode((1240, 640))
     
 
     #Create surface with dimensions (640,640)
     board = pygame.Surface((600, 600))
 
-    textback = pygame.Surface((300, 60))
+    textback = pygame.Surface((600, 60))
 
-    outputback = pygame.Surface((270, 400))
+    outputback = pygame.Surface((580, 400))
 
     textback.fill((150, 150, 150))
 
@@ -86,6 +91,7 @@ def main():
     while running:
         
         screen.fill((100, 100, 100))
+
         events = pygame.event.get()
         illegal_move = False
         for event in events:
@@ -207,10 +213,9 @@ def main():
                 
         if event.type == pygame.KEYDOWN and keydown == True:
             if event.key == pygame.K_RETURN:
-                message += textinput.value
-                draw = True
+                message = textinput.value
                 textinput.value = "" 
-                drawing += 20           
+                drawing += 40           
             keydown = False
         if event.type == pygame.KEYUP and keydown == False:
             keydown = True
@@ -227,9 +232,23 @@ def main():
             piece.draw(board)
 
         
-        if (draw == True):
-            ptext.draw("\nYou: %s" % message, (20, drawing), surf=outputback)
-            draw = False
+       
+
+        if (message != ""):
+            response = openai.ChatCompletion.create(
+            model = "gpt-3.5-turbo",
+            messages = [
+                {"role": "system", "content": "Stick to the topic of chess and provide commentary given chess-related information. Otherwise, ignore it. As well, keep commentary to 6 words or less and be spicy"},
+                {"role": "user", "content": message}
+            ]
+        )
+            ptext.draw("\nYou: %s \n Chester: %s" % (message, (response["choices"][0]["message"]["content"])), (20, drawing), surf=outputback)
+            
+            
+            message = ""
+            
+
+              
         
         textinput.update(events)
 
@@ -249,9 +268,11 @@ def main():
         screen.blit(board, (20, 20))
 
         #Update screen
-        
+
+        pygame.display.flip()
         pygame.display.update()
-        
+
+    
 
 if __name__== "__main__":
     main()
