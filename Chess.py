@@ -1,6 +1,8 @@
 import pygame
 import pygame_textinput
+import ptext
 pygame.init()
+keydown = True
 
 class Piece:
     def __init__(self, colour, x, y, piece_type):
@@ -14,6 +16,7 @@ class Piece:
         surface.blit(img, (self.x * 75, self.y * 75))
 
 def main():
+    message = ""
     pieces = []
     for i in range(8):
         pieces.append(Piece("black", i, 1, "pawn"))
@@ -44,27 +47,44 @@ def main():
 
     textinput = pygame_textinput.TextInputVisualizer()
 
-    textinput.font_color = (255, 255, 255)
+   
 
-    textinput.antialias = True
+    textinput.font_color = (255, 255, 255)
 
     textinput.cursor_color = (255, 255, 255)
 
     textinput.cursor_width = 3
 
+    textinput.font_object = pygame.font.Font(None, 25)
+
     #Initalize screen with dimensions (640,640)
-    screen = pygame.display.set_mode((840, 640))
+    screen = pygame.display.set_mode((940, 640))
     
 
     #Create surface with dimensions (640,640)
     board = pygame.Surface((600, 600))
+
+    textback = pygame.Surface((300, 60))
+
+    outputback = pygame.Surface((270, 400))
+
+    textback.fill((150, 150, 150))
+
+
     
     running = True
     
     piece_clicked_coords = [-1, -1]
     piece_clicked = pieces[0]
 
+    keydown = True
+
+    draw = False
+
+    drawing = 20
+    
     while running:
+        
         screen.fill((100, 100, 100))
         events = pygame.event.get()
         illegal_move = False
@@ -180,6 +200,20 @@ def main():
 
             if event.type == pygame.QUIT:
                 running = False
+            
+            
+
+            
+                
+        if event.type == pygame.KEYDOWN and keydown == True:
+            if event.key == pygame.K_RETURN:
+                message += textinput.value
+                draw = True
+                textinput.value = "" 
+                drawing += 20           
+            keydown = False
+        if event.type == pygame.KEYUP and keydown == False:
+            keydown = True
 
         #Fill board with colour
         board.fill((150, 111, 51))
@@ -192,13 +226,26 @@ def main():
         for piece in pieces:
             piece.draw(board)
 
-        #Draws board onto screen, positioned at (20,20)
-
         
+        if (draw == True):
+            ptext.draw("\nYou: %s" % message, (20, drawing), surf=outputback)
+            draw = False
         
         textinput.update(events)
-        screen.blit(textinput.surface, (730, 80))
 
+
+        
+        screen.blit(outputback, (650, 50))
+
+        
+        screen.blit(textback, (630, 550)) 
+        
+         
+        screen.blit(textinput.surface, (630, 550))
+
+        
+
+        #Draws board onto screen, positioned at (20,20)
         screen.blit(board, (20, 20))
 
         #Update screen
