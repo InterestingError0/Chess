@@ -10,7 +10,8 @@ import ptext
 import openai
 
 # OpenAI API Key (DON'T REMOVE!!!)
-openai.api_key = "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"
+openai.api_key = "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"
+
 
 # Class for chess pieces
 class Piece:
@@ -72,8 +73,8 @@ def main():
     # Initialize screen with dimensions (1240,640)
     screen = pygame.display.set_mode((1240, 640))
 
-    # Create surface with dimensions (640,640)
-    board = pygame.Surface((640, 640))
+    # Create surface with dimensions (600,600)
+    board = pygame.Surface((600, 600))
 
     textback = pygame.Surface((600, 60))
 
@@ -383,13 +384,13 @@ def main():
                 running = False
 
             # Used for textbox inputting
-            if event.type == pygame.KEYDOWN and keydown == True:
+            if event.type == pygame.KEYDOWN and keydown:
                 if event.key == pygame.K_RETURN:
                     message = textinput.value
                     textinput.value = ""
                     drawing += 40
                 keydown = False
-            if event.type == pygame.KEYUP and keydown == False:
+            if event.type == pygame.KEYUP and not keydown:
                 keydown = True
 
         # Fill board with colour
@@ -408,8 +409,7 @@ def main():
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system",
-                     "content": "Stick to the topic of chess and provide commentary given chess-related information. Otherwise, ignore it. As well, keep commentary to 10 words or less and be spicy. Your name is Chester and don't let anyone tell you otherwise!"},
+                    {"role": "system", "content": "Stick to the topic of chess and provide commentary given chess-related information. Otherwise, ignore it. As well, keep commentary to 10 words or less and be spicy. Your name is Chester and don't let anyone tell you otherwise!"},
                     {"role": "user", "content": message}
                 ]
             )
@@ -433,6 +433,7 @@ def main():
 
         # Update screen
         pygame.display.flip()
+
 
 def is_king_under_attack(whites_move, pieces):
     if whites_move:
