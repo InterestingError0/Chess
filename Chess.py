@@ -26,7 +26,7 @@ class Piece:
 
 def main():
     
-
+    pieces = []
     #Organizes the chess pieces on the board
     for i in range(8):
         pieces.append(Piece("black", i, 1, "pawn"))
@@ -55,7 +55,7 @@ def main():
 
     keydown = True
     message = ""
-    pieces = []
+    
 
     logo = pygame.image.load("images/logo.png")
     pygame.display.set_icon(logo)
